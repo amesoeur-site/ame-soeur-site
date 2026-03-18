@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Âme Sœur — Rencontres sérieuses pour tous</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:     #E8624A;
+      --rose-lt:  #F5A28C;
+      --blush:    #FDE8DF;
+      --cream:    #FFF8F4;
+      --mauve:    #7C4B6E;
+      --mauve-lt: #C48CB0;
+      --dark:     #2A1A22;
+      --text:     #4A3040;
+      --gold:     #D4A853;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 6vw;
+      background: rgba(255,248,244,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(232,98,74,0.12);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--rose);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--mauve); font-style: italic; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text);
+      font-size: .9rem; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--rose); }
+    .nav-cta {
+      background: var(--rose);
+      color: #fff !important;
+      padding: .55rem 1.4rem;
+      border-radius: 50px;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--mauve) !important; transform: translateY(-2px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+      padding: 8rem 6vw 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 30%, rgba(232,98,74,.10) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(124,75,110,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    /* Pétales décoratifs */
+    .petal {
+      position: absolute;
+      border-radius: 50% 0 50% 0;
+      opacity: .18;
+      animation: floatPetal linear infinite;
+    }
+    @keyframes floatPetal {
+      0%   { transform: translateY(0) rotate(0deg); opacity: .18; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .hero-text { position: relative; z-index: 2; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--blush);
+      color: var(--rose);
+      font-size: .8rem; font-weight: 500;
+      padding: .4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(232,98,74,.2);
+      animation: fadeUp .6s ease both;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      background: var(--rose); border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.6} }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      line-height: 1.12;
+      color: var(--dark);
+      margin-bottom: 1.4rem;
+      animation: fadeUp .7s .1s ease both;
+    }
+    h1 em { color: var(--rose); font-style: italic; }
+    h1 .underline-gold {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--rose-lt) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.7;
+      color: var(--text); max-width: 480px;
+      margin-bottom: 2.2rem;
+      animation: fadeUp .7s .2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp .7s .3s ease both;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rose), var(--mauve));
+      color: #fff;
+      padding: .9rem 2.2rem;
+      border-radius: 50px;
+      font-size: 1rem; font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(232,98,74,.35);
+      transition: transform .2s, box-shadow .2s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(232,98,74,.4); }
+    .btn-ghost {
+      border: 1.5px solid var(--rose);
+      color: var(--rose);
+      padding: .9rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-ghost:hover { background: var(--blush); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 2.5rem;
+      animation: fadeUp .7s .4s ease both;
+    }
+    .stat strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--rose);
+    }
+    .stat span { font-size: .82rem; color: #997080; }
+
+    /* ─── HERO VISUAL ─── */
+    .hero-visual {
+      position: relative; z-index: 2;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .cards-stack {
+      position: relative;
+      width: 320px; height: 420px;
+    }
+    .profile-card {
+      position: absolute;
+      width: 260px;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(42,26,34,.15);
+      animation: fadeUp .8s ease both;
+    }
+    .card-main { left: 50%; transform: translateX(-50%); top: 0; z-index: 3; animation-delay: .2s; }
+    .card-back1 { left: 55%; top: 30px; z-index: 2; transform: rotate(6deg); opacity: .7; animation-delay: .35s; }
+    .card-back2 { left: 35%; top: 50px; z-index: 1; transform: rotate(-5deg); opacity: .5; animation-delay: .5s; }
+
+    .card-img {
+      width: 100%; height: 200px;
+      background: linear-gradient(135deg, var(--blush) 0%, var(--rose-lt) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      position: relative; overflow: hidden;
+    }
+    .card-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(255,255,255,.3));
+    }
+    .card-body { padding: 1rem 1.2rem 1.2rem; }
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--dark); margin-bottom: .25rem;
+    }
+    .card-info { font-size: .8rem; color: #997080; margin-bottom: .7rem; }
+    .card-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .tag {
+      background: var(--blush);
+      color: var(--rose);
+      font-size: .7rem; padding: .25rem .7rem;
+      border-radius: 50px;
+    }
+    .card-actions {
+      display: flex; justify-content: center; gap: 1rem; padding: .8rem 1.2rem 1rem;
+    }
+    .action-btn {
+      width: 46px; height: 46px; border-radius: 50%;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .action-btn:hover { transform: scale(1.12); }
+    .btn-pass { background: #fff; border: 2px solid #eee; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .btn-like { background: linear-gradient(135deg, var(--rose), var(--mauve)); box-shadow: 0 6px 20px rgba(232,98,74,.35); }
+
+    /* Floating hearts */
+    .heart-float {
+      position: absolute;
+      font-size: 1.4rem;
+      animation: floatHeart 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes floatHeart {
+      0%,100% { transform: translateY(0) scale(1); opacity: .7; }
+      50%      { transform: translateY(-18px) scale(1.1); opacity: 1; }
+    }
+
+    /* ─── FEATURES ─── */
+    .section { padding: 6rem 6vw; }
+    .section-label {
+      font-size: .8rem; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--rose);
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--dark); line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: #997080; max-width: 520px; line-height: 1.7; margin-bottom: 3rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(232,98,74,.1);
+      transition: transform .25s, box-shadow .25s;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--rose), var(--mauve));
+      opacity: 0; transition: opacity .25s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(42,26,34,.1); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .feature-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--dark); margin-bottom: .5rem; }
+    .feature-desc { font-size: .88rem; line-height: 1.65; color: #997080; }
+
+    /* ─── HOW IT WORKS ─── */
+    .how-bg {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--mauve) 100%);
+      color: #fff;
+    }
+    .how-bg .section-label { color: var(--rose-lt); }
+    .how-bg .section-title { color: #fff; }
+    .how-bg .section-sub { color: rgba(255,255,255,.6); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .step {
+      text-align: center;
+      animation: fadeUp .6s ease both;
+    }
+    .step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      border: 2px solid rgba(232,98,74,.5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--rose-lt);
+      margin: 0 auto 1.2rem;
+    }
+    .step h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: .5rem; }
+    .step p { font-size: .85rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+    .step-arrow { display: flex; align-items: center; justify-content: center; color: rgba(232,98,74,.4); font-size: 1.5rem; padding-top: 1.5rem; }
+
+    /* ─── ACTIVITIES ─── */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .activity-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem 2rem 1.5rem;
+      border: 1px solid rgba(232,98,74,.1);
+      display: flex; gap: 1.2rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .activity-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(42,26,34,.09); }
+    .activity-icon-wrap {
+      width: 54px; height: 54px; border-radius: 14px;
+      background: var(--blush);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    .activity-card h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--dark); margin-bottom: .35rem; }
+    .activity-card p { font-size: .83rem; color: #997080; line-height: 1.6; }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .testimonial {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.8rem;
+      border: 1px solid rgba(232,98,74,.1);
+    }
+    .stars { color: var(--gold); margin-bottom: 1rem; font-size: 1rem; }
+    .testimonial-text { font-size: .9rem; line-height: 1.7; color: var(--text); margin-bottom: 1.2rem; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: .8rem; }
+    .avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blush), var(--rose-lt));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .author-name { font-weight: 500; font-size: .88rem; color: var(--dark); }
+    .author-sub { font-size: .75rem; color: #997080; }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--rose) 0%, var(--mauve) 100%);
+      text-align: center;
+      padding: 6rem 6vw;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '♥ ♡ ♥ ♡ ♥ ♡ ♥ ♡ ♥ ♡ ♥ ♡';
+      position: absolute; top: 10px; left: 0; right: 0;
+      font-size: 1.2rem; letter-spacing: 2rem;
+      opacity: .08; color: #fff;
+      white-space: nowrap; overflow: hidden;
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #fff; margin-bottom: 1rem;
+    }
+    .cta-section p { color: rgba(255,255,255,.8); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .btn-white {
+      background: #fff;
+      color: var(--rose);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1rem; font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+      transition: transform .2s, box-shadow .2s;
+      display: inline-block;
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,.25); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.6);
+      padding: 3rem 6vw 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer-brand .logo { margin-bottom: .8rem; display: block; }
+    .footer-brand p { font-size: .85rem; line-height: 1.6; }
+    footer h4 {
+      font-family: 'Playfair Display', serif;
+      color: #fff; margin-bottom: 1rem; font-size: .95rem;
+    }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: .5rem; }
+    footer ul a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    footer ul a:hover { color: var(--rose-lt); }
+    .footer-bottom {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,.07);
+      text-align: center;
+      padding: 1.2rem 6vw;
+      font-size: .78rem;
+      color: rgba(255,255,255,.3);
+    }
+
+    /* ─── MODAL INSCRIPTION ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(42,26,34,.6);
+      backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--cream);
+      border-radius: 28px;
+      padding: 2.5rem;
+      width: 90%; max-width: 440px;
+      position: relative;
+      animation: modalIn .3s ease;
+    }
+    @keyframes modalIn { from{transform:scale(.92);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal-close {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      background: var(--blush); border: none; width: 36px; height: 36px;
+      border-radius: 50%; cursor: pointer; font-size: 1rem; color: var(--rose);
+    }
+    .modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--dark); margin-bottom: .4rem;
+    }
+    .modal p { font-size: .88rem; color: #997080; margin-bottom: 1.8rem; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-size: .82rem; font-weight: 500; color: var(--text); margin-bottom: .4rem; }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1.5px solid rgba(232,98,74,.2);
+      border-radius: 12px;
+      font-size: .9rem;
+      font-family: 'DM Sans', sans-serif;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--rose); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--rose), var(--mauve));
+      color: #fff;
+      border: none; cursor: pointer;
+      padding: .95rem;
+      border-radius: 50px;
+      font-size: 1rem; font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      margin-top: .5rem;
+      box-shadow: 0 8px 24px rgba(232,98,74,.35);
+      transition: transform .2s;
+    }
+    .btn-submit:hover { transform: translateY(-2px); }
+    .modal-footer { text-align: center; font-size: .8rem; color: #997080; margin-top: 1rem; }
+    .modal-footer a { color: var(--rose); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .activities-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Âme<span>Sœur</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">Fonctionnalités</a></li>
+    <li><a href="#activities">Activités</a></li>
+    <li><a href="#temoignages">Témoignages</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal()">Rejoindre — C'est gratuit</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Pétales animés -->
+  <div class="petal" style="width:18px;height:18px;background:var(--rose-lt);left:15%;top:80%;animation-duration:8s;animation-delay:0s"></div>
+  <div class="petal" style="width:12px;height:12px;background:var(--mauve-lt);left:25%;top:90%;animation-duration:10s;animation-delay:2s"></div>
+  <div class="petal" style="width:22px;height:22px;background:var(--blush);left:70%;top:85%;animation-duration:7s;animation-delay:1s;border-radius:50% 0 50% 0"></div>
+  <div class="petal" style="width:10px;height:10px;background:var(--rose);left:85%;top:75%;animation-duration:9s;animation-delay:3s"></div>
+
+  <div class="hero-text">
+    <div class="hero-badge">
+      <div class="dot"></div>
+      Plus de 12 000 membres actifs · 18 ans et plus
+    </div>
+    <h1>
+      Trouvez votre<br>
+      <em>véritable</em> <span class="underline-gold">connexion</span>
+    </h1>
+    <p class="hero-sub">
+      Âme Sœur est bien plus qu'un site de rencontre — c'est une communauté chaleureuse ouverte à tous dès 18 ans, pour ceux qui cherchent des relations sincères, des amitiés durables et des aventures partagées.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary" onclick="openModal()">✨ Créer mon profil gratuit</a>
+      <a href="#features" class="btn-ghost">🔍 Découvrir</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>12K+</strong><span>Membres</span></div>
+      <div class="stat"><strong>3K+</strong><span>Matchs réussis</span></div>
+      <div class="stat"><strong>4.8★</strong><span>Note moyenne</span></div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!-- Cœurs flottants -->
+    <div class="heart-float" style="top:5%;left:10%;animation-delay:0s">💗</div>
+    <div class="heart-float" style="top:15%;right:5%;animation-delay:1s;font-size:1rem">💕</div>
+    <div class="heart-float" style="bottom:20%;left:5%;animation-delay:2s;font-size:1rem">🌸</div>
+
+    <div class="cards-stack">
+      <!-- Carte derrière 2 -->
+      <div class="profile-card card-back2">
+        <div class="card-img">🌷</div>
+      </div>
+      <!-- Carte derrière 1 -->
+      <div class="profile-card card-back1">
+        <div class="card-img">🌿</div>
+      </div>
+      <!-- Carte principale -->
+      <div class="profile-card card-main">
+        <div class="card-img">🌸</div>
+        <div class="card-body">
+          <div class="card-name">Camille, 24 ans</div>
+          <div class="card-info">📍 Lyon · Graphiste & voyageuse</div>
+          <div class="card-tags">
+            <span class="tag">Voyages</span>
+            <span class="tag">Musique</span>
+            <span class="tag">Cuisine</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="action-btn btn-pass">✕</button>
+          <button class="action-btn btn-like">♥</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <p class="section-label">✦ Pourquoi nous choisir</p>
+  <h2 class="section-title">Conçu pour des rencontres <em style="color:var(--rose)">vraies</em></h2>
+  <p class="section-sub">Chaque fonctionnalité est pensée pour créer des liens authentiques et durables, pas juste des swipes.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <div class="feature-title">Profils détaillés & authentiques</div>
+      <p class="feature-desc">Photos, passions, valeurs, ambitions — montrez qui vous êtes vraiment pour attirer les bonnes personnes.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <div class="feature-title">Messagerie instantanée</div>
+      <p class="feature-desc">Chattez en temps réel une fois le match établi. Photos, GIFs, vocaux — tout pour briser la glace naturellement.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Matching par valeurs</div>
+      <p class="feature-desc">Notre algorithme va au-delà du physique — il analyse vos centres d'intérêt, votre rythme de vie et vos projets.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛡️</div>
+      <div class="feature-title">Profils vérifiés</div>
+      <p class="feature-desc">Vérification par email et badge de confiance optionnel pour une communauté safe et sécurisée.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <div class="feature-title">Rencontres locales & voyages</div>
+      <p class="feature-desc">Filtrez par ville, région ou même rencontrez des gens avant un voyage — l'amour n'a pas de frontières.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎉</div>
+      <div class="feature-title">Événements communautaires</div>
+      <p class="feature-desc">Speed datings virtuels, soirées thématiques, défis photo — rencontrez-vous aussi hors ligne !</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-bg" id="how">
+  <p class="section-label">✦ Comment ça marche</p>
+  <h2 class="section-title">En 4 étapes simples</h2>
+  <p class="section-sub">Rejoindre Âme Sœur prend moins de 3 minutes. L'histoire d'amour, elle, peut durer toute une vie — peu importe l'âge.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Créez votre profil</h3>
+      <p>Inscription gratuite, ajoutez vos photos et décrivez votre personnalité en quelques mots.</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Découvrez des profils</h3>
+      <p>Parcourez les profils suggérés selon vos critères. Likez ceux qui vous correspondent.</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Créez un match</h3>
+      <p>Si c'est réciproque, c'est un match ! Vous pouvez alors commencer à discuter.</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Vivez l'aventure</h3>
+      <p>Chattez, participez aux événements, et laissez la relation évoluer naturellement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section class="section" id="activities">
+  <p class="section-label">✦ Bien plus que des rencontres</p>
+  <h2 class="section-title">Une communauté <em style="color:var(--rose)">vivante</em></h2>
+  <p class="section-sub">Âme Sœur vous offre un espace pour partager vos passions, grandir et créer des liens qui comptent vraiment.</p>
+
+  <div class="activities-grid">
+    <div class="activity-card">
+      <div class="activity-icon-wrap">🎮</div>
+      <div>
+        <h3>Jeux & défis entre membres</h3>
+        <p>Questionnaires de compatibilité, défis créatifs, quizz surprises — s'amuser ensemble avant même de se rencontrer.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <div class="activity-icon-wrap">📸</div>
+      <div>
+        <h3>Stories & moments du quotidien</h3>
+        <p>Partagez vos sorties, voyages et découvertes avec votre communauté. Créez du lien avant même le premier message.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <div class="activity-icon-wrap">📖</div>
+      <div>
+        <h3>Clubs d'intérêts communs</h3>
+        <p>Rejoignez des groupes thématiques : musique, sport, cuisine, cinéma… et rencontrez des gens qui partagent vos passions.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <div class="activity-icon-wrap">🎤</div>
+      <div>
+        <h3>Speed datings & événements live</h3>
+        <p>Des sessions vidéo organisées chaque semaine pour briser la glace de façon fun et sans pression.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <div class="activity-icon-wrap">✈️</div>
+      <div>
+        <h3>Voyages & aventures partagées</h3>
+        <p>Vous voyagez ? Indiquez votre destination et rencontrez des membres locaux ou d'autres voyageurs.</p>
+      </div>
+    </div>
+    <div class="activity-card">
+      <div class="activity-icon-wrap">💡</div>
+      <div>
+        <h3>Conseils & développement personnel</h3>
+        <p>Articles, podcasts et ateliers pour mieux se connaître et aborder les relations avec confiance et sérénité.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="temoignages" style="background:var(--blush)">
+  <p class="section-label">✦ Ils ont trouvé leur âme sœur</p>
+  <h2 class="section-title">Des histoires <em style="color:var(--rose)">vraies</em></h2>
+  <p class="section-sub">Chaque jour, de nouveaux liens se créent. Voici quelques témoignages de notre communauté.</p>
+
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Je ne croyais plus aux sites de rencontre… jusqu'à Âme Sœur. J'ai rencontré Thomas lors d'un speed dating virtuel. 8 mois plus tard, on est inséparables."</p>
+      <div class="testimonial-author">
+        <div class="avatar">🌸</div>
+        <div>
+          <div class="author-name">Léa, 26 ans</div>
+          <div class="author-sub">Paris · Membre depuis 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Ce qui m'a séduit, c'est la profondeur des profils. On parle de vrais sujets, pas juste de l'apparence. J'ai trouvé quelqu'un qui partage mes valeurs."</p>
+      <div class="testimonial-author">
+        <div class="avatar">🌿</div>
+        <div>
+          <div class="author-name">Maxime, 43 ans</div>
+          <div class="author-sub">Lyon · Membre depuis 2023</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Au-delà de ma relation, j'ai trouvé une vraie communauté. Les clubs d'intérêts m'ont permis de faire des amis formidables que je n'aurais jamais rencontrés autrement."</p>
+      <div class="testimonial-author">
+        <div class="avatar">🦋</div>
+        <div>
+          <div class="author-name">Amina, 57 ans</div>
+          <div class="author-sub">Bordeaux · Membre depuis 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Votre histoire commence<br>aujourd'hui 💫</h2>
+  <p>Rejoignez plus de 12 000 membres qui ont choisi Âme Sœur pour des rencontres sincères. Ouvert à tous dès 18 ans — inscription entièrement gratuite.</p>
+  <a href="#" class="btn-white" onclick="openModal()">✨ Créer mon compte gratuit</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo">Âme<span>Sœur</span></div>
+    <p>La plateforme de rencontres sérieuses ouverte à tous dès 18 ans, pour ceux qui croient encore en l'amour vrai.</p>
+  </div>
+  <div>
+    <h4>Découvrir</h4>
+    <ul>
+      <li><a href="#">Comment ça marche</a></li>
+      <li><a href="#">Fonctionnalités</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a href="#">Blog & Conseils</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Communauté</h4>
+    <ul>
+      <li><a href="#">Clubs thématiques</a></li>
+      <li><a href="#">Speed datings</a></li>
+      <li><a href="#">Témoignages</a></li>
+      <li><a href="#">Parrainage</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Aide & Légal</h4>
+    <ul>
+      <li><a href="#">Centre d'aide</a></li>
+      <li><a href="#">Sécurité</a></li>
+      <li><a href="#">CGU</a></li>
+      <li><a href="#">Vie privée</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2025 Âme Sœur — Fait avec ♥ en France · Tous droits réservés
+</div>
+
+<!-- MODAL INSCRIPTION -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Rejoignez-nous 💗</h2>
+    <p>Créez votre profil en 2 minutes — c'est 100% gratuit.</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Prénom</label>
+        <input type="text" placeholder="Votre prénom" />
+      </div>
+      <div class="form-group">
+        <label>Âge</label>
+        <input type="number" placeholder="30" min="18" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="vous@email.com" />
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" placeholder="Au moins 8 caractères" />
+    </div>
+    <div class="form-group">
+      <label>Je suis</label>
+      <select>
+        <option>Une femme</option>
+        <option>Un homme</option>
+        <option>Non-binaire</option>
+        <option>Préfère ne pas préciser</option>
+      </select>
+    </div>
+    <button class="btn-submit" onclick="handleSignup()">Créer mon profil gratuit ✨</button>
+    <div class="modal-footer">Déjà membre ? <a href="#">Se connecter</a></div>
+  </div>
+</div>
+
+<script>
+  function openModal() { document.getElementById('modal').classList.add('open'); }
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
+  function closeModalOutside(e) { if (e.target.id === 'modal') closeModal(); }
+  function handleSignup() {
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = '⏳ Création en cours…';
+    setTimeout(() => {
+      btn.textContent = '✅ Profil créé ! Bienvenue !';
+      btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+    }, 1500);
+  }
+
+  // Intersection Observer pour animations au scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = 'fadeUp .6s ease both';
+        e.target.style.opacity = '1';
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.feature-card, .activity-card, .testimonial, .step').forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
